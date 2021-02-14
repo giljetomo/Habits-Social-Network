@@ -23,6 +23,17 @@ struct Settings {
             archiveJSON(value: newValue, key: Setting.favoriteHabits)
         }
     }
+    
+    mutating func toggleFavorite(_ habit: Habit) {
+        var favorites = favoriteHabits
+
+        if favorites.contains(habit) {
+            favorites = favorites.filter { $0 != habit }
+        } else {
+            favorites.append(habit)
+        }
+        favoriteHabits = favorites
+    }
     private func archiveJSON<T: Encodable>(value: T, key: String) {
         let data = try! JSONEncoder().encode(value)
         let string = String(data: data, encoding: .utf8)
