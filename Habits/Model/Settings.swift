@@ -10,6 +10,7 @@ import Foundation
 struct Settings {
     static var shared = Settings()
     private let defaults = UserDefaults.standard
+    let currentUser = User(id: "user20", name: "Gil Jetomo", color: nil, bio: nil)
     
     enum Setting {
         static let favoriteHabits = "favoriteHabits"
@@ -40,6 +41,16 @@ struct Settings {
             favorites.append(habit)
         }
         favoriteHabits = favorites
+    }
+    mutating func toggleFollowed(user: User) {
+        var updated = followedUserIDs
+
+        if updated.contains(user.id) {
+            updated = updated.filter { $0 != user.id }
+        } else {
+            updated.append(user.id)
+        }
+        followedUserIDs = updated
     }
     private func archiveJSON<T: Encodable>(value: T, key: String) {
         let data = try! JSONEncoder().encode(value)

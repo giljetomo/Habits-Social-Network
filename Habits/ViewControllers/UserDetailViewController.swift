@@ -23,7 +23,15 @@ class UserDetailViewController: UIViewController {
         enum Section: Hashable, Comparable {
             case leading
             case category(_ category: Category)
-    
+            
+            var sectionColor: UIColor {
+                switch self {
+                case .leading:
+                    return .systemGray4
+                case .category(let category):
+                    return category.color.uiColor
+                }
+            }
             static func < (lhs: Section, rhs: Section) -> Bool {
                 switch (lhs, rhs) {
                 case (.leading, .category), (.leading, .leading):
@@ -62,7 +70,8 @@ class UserDetailViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        view.backgroundColor = user.color?.uiColor ?? .white
         userNameLabel.text = user.name
         bioLabel.text = user.bio
         
@@ -162,6 +171,7 @@ class UserDetailViewController: UIViewController {
             case .category(let category):
                 header.nameLabel.text = category.name
             }
+            header.backgroundColor = section.sectionColor
             return header
         }
         return dataSource

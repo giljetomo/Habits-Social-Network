@@ -81,3 +81,15 @@ extension APIRequest where Response == UIImage {
         }.resume()
     }
 }
+extension APIRequest {
+    func send(completion: @escaping (Error?) -> Void) {
+        URLSession.shared.dataTask(with: request) { (_, _, error) in
+            completion(error)
+        }.resume()
+    }
+}
+struct CombinedStatisticsRequest: APIRequest {
+    typealias Response = CombinedStatistics
+
+    var path: String { "/combinedStats" }
+}

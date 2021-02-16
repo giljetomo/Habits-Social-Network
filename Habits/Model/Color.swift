@@ -5,7 +5,7 @@
 //  Created by Macbook Pro on 2021-02-13.
 //
 
-import Foundation
+import UIKit
 
 struct Color {
     let hue: Double
@@ -19,3 +19,12 @@ extension Color: Codable {
         case brightness = "b"
     }
 }
+extension Color {
+    var uiColor: UIColor {
+        return UIColor(hue: CGFloat(hue), saturation:
+           CGFloat(saturation), brightness: CGFloat(brightness),
+           alpha: 1)
+    }
+}
+
+extension Color: Hashable { }
